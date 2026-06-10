@@ -15,25 +15,9 @@ body {
     max-width: 760px;
     margin: 0 auto;
 }
-h1 {
-    color: #9d7aff;
-    font-size: 28px;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #2a2a45;
-    padding-bottom: 12px;
-}
-h2 {
-    color: #bb9eff;
-    font-size: 20px;
-    margin-top: 28px;
-    margin-bottom: 10px;
-}
-h3 {
-    color: #d4c2ff;
-    font-size: 16px;
-    margin-top: 18px;
-    margin-bottom: 6px;
-}
+h1 { color: #9d7aff; font-size: 28px; margin-bottom: 8px; border-bottom: 2px solid #2a2a45; padding-bottom: 12px; }
+h2 { color: #bb9eff; font-size: 20px; margin-top: 28px; margin-bottom: 10px; }
+h3 { color: #d4c2ff; font-size: 16px; margin-top: 18px; margin-bottom: 6px; }
 p, li { color: #c8c8d8; font-size: 14px; margin-bottom: 10px; }
 ul { padding-left: 22px; margin-bottom: 10px; }
 a { color: #9d7aff; text-decoration: none; }
@@ -47,7 +31,7 @@ strong { color: #e8e8f0; }
 <body>
 
 <h1>Privacy Policy</h1>
-<p class="meta">HTG GameZone · Last updated: April 21, 2026 · Effective: April 21, 2026</p>
+<p class="meta">HTG GameZone · Last updated: June 2026 · Effective: June 2026</p>
 
 <div class="section">
 <p>Hi Tech Gamerz ("we", "our", "us") operates the HTG GameZone Android application ("the App"). This Privacy Policy explains what information we collect, how we use it, and what choices you have.</p>
@@ -69,135 +53,168 @@ strong { color: #e8e8f0; }
 </ul>
 
 <h3>1.2 Data Processed On-Device Only</h3>
-<p>The App reads the following information from your device to display it to you. This data is processed locally on your device and is never transmitted to our servers (we do not operate servers):</p>
+<p>The App reads the following information from your device to display it to you. This data is processed locally and is never transmitted to our servers (we do not operate servers):</p>
 <ul>
 <li><strong>Device specifications:</strong> Model name, Android version, CPU architecture, screen resolution, manufacturer</li>
 <li><strong>Memory (RAM) usage:</strong> Total, used, and available RAM</li>
 <li><strong>Storage usage:</strong> Total, used, and free storage space</li>
 <li><strong>Battery status:</strong> Level, temperature, voltage, health, charging status</li>
 <li><strong>Network information:</strong> Connection type (WiFi/Mobile), link speed, public IP (fetched only when you tap "Check Network"), ping latency</li>
-<li><strong>Installed apps list:</strong> Package names and app icons of apps installed on your device. Used only to populate the Game Launcher list and App Manager. This list is never transmitted off your device.</li>
+<li><strong>Installed apps list:</strong> Package names and app icons of apps on your device. Used only to populate the Game Launcher, App Manager, and Storage Analyzer. Never transmitted off your device.</li>
+<li><strong>DNS setting:</strong> Current Private DNS configuration, read only when you open the DNS Changer in the Game Toolbox overlay. Never transmitted off your device.</li>
 </ul>
 
 <h3>1.3 Data Collected by Third Parties (AdMob)</h3>
-<p>The App displays ads via Google AdMob. Google may collect the following through AdMob SDK:</p>
+<p>The App displays ads via Google AdMob. The App uses the following AdMob ad formats: <strong>Banner ads</strong>, <strong>Rewarded Interstitial ads</strong>, <strong>Rewarded Video ads</strong>, and <strong>App Open ads</strong>. Google may collect the following through the AdMob SDK:</p>
 <ul>
 <li><strong>Advertising ID (AAID):</strong> A resettable identifier you can control in Android Settings → Privacy → Ads. Used for personalized ads.</li>
 <li><strong>Device information:</strong> Device model, OS version, general location (derived from IP, country-level), and ad interaction data</li>
 <li><strong>Crash reports and performance data</strong> to improve the ad SDK</li>
 </ul>
-<p>Google's handling of this data is governed by their own Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+<p>All AdMob data collection is subject to your consent choice shown on first launch. Google's handling of this data is governed by their own Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
 
 <h3>1.4 Data Stored Locally on Your Device</h3>
-<p>The App uses Android SharedPreferences to save your settings and preferences locally on your device only:</p>
+<p>The App uses Android SharedPreferences to save your settings and preferences locally only:</p>
 <ul>
-<li>Your toggle states (Gaming Mode, DND, Screen-On, etc.)</li>
+<li>Your toggle states (Gaming Mode, DND, Screen-On, Rotation Lock, etc.)</li>
 <li>Your engagement points balance and usage counters</li>
 <li>Your Game Launcher list (apps you've added)</li>
 <li>Your notification preferences</li>
+<li>Ad impression timestamps (used to enforce minimum gap between ads — never transmitted)</li>
+<li>Consent state for AdMob personalized advertising</li>
 </ul>
 <p>This data never leaves your device. Uninstalling the App removes all locally stored data.</p>
 </div>
 
 <div class="section">
 <h2>2. Permissions We Use</h2>
-<p>The App requests the following Android permissions. Each has a clear purpose tied to a specific feature:</p>
+<p>The App requests the following Android permissions, each tied to a specific feature:</p>
 
 <h3>INTERNET / ACCESS_NETWORK_STATE</h3>
 <p>Required to display ads via AdMob and fetch public IP in the optional Network Check feature.</p>
 
 <h3>AD_ID</h3>
-<p>Required by Google AdMob SDK for ad attribution. You can reset or disable this in Android Settings.</p>
+<p>Required by Google AdMob SDK for ad attribution. You can reset or disable this in Android Settings → Privacy → Ads.</p>
 
 <h3>POST_NOTIFICATIONS</h3>
-<p>To show you optional reminders about device stats. You can disable notifications anytime in App Settings.</p>
+<p>To show optional reminders about device stats. You can disable notifications anytime in App Settings or Android notification settings.</p>
 
 <h3>ACCESS_NOTIFICATION_POLICY</h3>
-<p>Required for the Do Not Disturb (DND) toggle in Game Launcher. Only activates DND when you explicitly enable the toggle.</p>
+<p>Required for the Do Not Disturb (DND) toggle in Game Launcher and Game Toolbox overlay. Only activates DND when you explicitly enable the toggle. If permission is not granted, the toggle is visibly disabled with an explanation.</p>
 
 <h3>WRITE_SETTINGS</h3>
-<p>Required for the Rotation Lock toggle in Game Launcher. Only modifies system rotation setting when you explicitly enable the toggle. Any changes are fully reversible by toggling it off.</p>
+<p>Required for the Rotation Lock toggle in Game Launcher and Game Toolbox overlay. Only modifies the system rotation setting when you explicitly enable the toggle. Fully reversible. If permission is not granted, the toggle is visibly disabled with an explanation.</p>
 
 <h3>SYSTEM_ALERT_WINDOW (Display over other apps)</h3>
-<p>Required for the optional Game Toolbox floating overlay. Only activates when you explicitly enable it. You can revoke this permission anytime.</p>
+<p>Required for the optional Game Toolbox floating overlay that displays live RAM, battery, temperature, and FPS stats while gaming. Only activates when you explicitly enable it. Revocable anytime.</p>
 
 <h3>FOREGROUND_SERVICE / FOREGROUND_SERVICE_SPECIAL_USE</h3>
-<p>Required to run the Game Toolbox floating overlay while gaming. Service runs only when you explicitly enable the toolbox.</p>
+<p>Required to run the Game Toolbox floating overlay as a foreground service during gaming. Declared as <em>specialUse</em> with subtype: "Game overlay toolbox with live stats." The service only runs when you explicitly enable the toolbox and shows a persistent notification as required by Android.</p>
 
 <h3>QUERY_ALL_PACKAGES</h3>
-<p>Required to list installed apps in the Game Launcher and App Manager features. The list is used only to populate in-app UI and is never transmitted off your device.</p>
+<p>Required to list installed apps in the Game Launcher, App Manager, and Storage Analyzer (largest apps) features. The list is used only to populate in-app UI and is never transmitted off your device.</p>
 
 <h3>REQUEST_DELETE_PACKAGES</h3>
-<p>Required for the App Manager feature to let you uninstall apps through the standard Android uninstall prompt. Only activates when you tap uninstall.</p>
+<p>Required for the App Manager feature to let you uninstall apps through the standard Android uninstall prompt. Activates only when you tap Uninstall on a specific app.</p>
 
 <h3>RECEIVE_BOOT_COMPLETED</h3>
-<p>Required to schedule optional reminder notifications after device reboot.</p>
+<p>Required to reschedule optional reminder notifications after device reboot. No data is collected on boot.</p>
 </div>
 
 <div class="section">
-<h2>3. Shizuku-Based Advanced Tweaks</h2>
-<p>The App includes optional "Advanced Tweaks" that modify Android system settings via the <a href="https://shizuku.rikka.app/" target="_blank">Shizuku</a> service. You must install and set up Shizuku separately — the App does not grant itself any elevated permissions.</p>
+<h2>3. Shizuku-Based Advanced Features</h2>
+<p>The App includes optional features that use the <a href="https://shizuku.rikka.app/" target="_blank">Shizuku</a> service (a third-party ADB bridge installed separately by you). These features are:</p>
 <ul>
-<li>All tweaks require your explicit tap to apply</li>
-<li>A confirmation dialog clearly explains what each tweak changes</li>
-<li>All tweaks are fully reversible via the "Reset All" button</li>
-<li>The App does not collect or transmit data about tweaks you apply</li>
-<li>If Shizuku is not installed, this section of the App does not function — no data is collected</li>
+<li><strong>Advanced Tweaks:</strong> Modify standard Android system settings (animation speed, DPI, refresh rate, background process limits, DNS, etc.)</li>
+<li><strong>Module Flasher:</strong> Apply preset configuration modules in .turbox format</li>
+<li><strong>Game Toolbox — Clear All Cache:</strong> Clears cached data for all apps using <code>pm trim-caches</code> (the same API used by Android's own Settings app). No user data is deleted — only temporary cache files.</li>
+<li><strong>Game Toolbox — DNS Changer:</strong> Changes the device's Private DNS setting to a provider you choose (Cloudflare, Google, AdGuard, OpenDNS, or Auto). This affects all apps on the device.</li>
+</ul>
+<p>For all Shizuku features:</p>
+<ul>
+<li>All actions require your explicit tap to apply</li>
+<li>All tweaks are fully reversible using the "Reset All" button or by selecting "Auto" DNS</li>
+<li>The App does not collect or transmit any data about which tweaks you apply</li>
+<li>If Shizuku is not installed or not granted permission, these features are visibly disabled</li>
 </ul>
 </div>
 
 <div class="section">
-<h2>4. How We Use Information</h2>
-<p>Because the App does not collect personal data, we do not use your personal data for any purpose. Locally-processed device stats are shown only to you within the App. AdMob uses advertising data to serve ads — you can opt out of personalized ads in Android Settings → Privacy → Ads.</p>
+<h2>4. Advertisements and Consent</h2>
+<p>On first launch, the App shows a consent dialog (Google's UMP SDK) asking whether you want personalized or non-personalized ads. Your choice is respected for all ad formats:</p>
+<ul>
+<li><strong>Banner ads:</strong> Displayed at the bottom of main screens</li>
+<li><strong>App Open ads:</strong> Shown when you return to the app from the background (minimum 4-hour gap between impressions, never on first cold launch)</li>
+<li><strong>Rewarded Interstitial ads:</strong> Shown at natural break points after feature use (approximately every 3rd action, minimum 60-second gap)</li>
+<li><strong>Rewarded Video ads:</strong> Opt-in only — you tap "Watch Video" to earn bonus engagement points</li>
+</ul>
+<p>You can change your ad preference anytime in Android Settings → Privacy → Ads. You can also reset or delete your Advertising ID entirely from the same menu.</p>
 </div>
 
 <div class="section">
-<h2>5. Data Sharing</h2>
+<h2>5. Engagement Points</h2>
+<p>The App includes a cosmetic engagement points system. All data is stored locally on your device only:</p>
+<ul>
+<li>Points balance and badge level</li>
+<li>Daily earn counters and ad-watch counts</li>
+<li>Last ad watch timestamp (for cooldown enforcement)</li>
+</ul>
+<p>This data is never transmitted to any server. Points have no monetary value and cannot be exchanged for real-world goods or services.</p>
+</div>
+
+<div class="section">
+<h2>6. How We Use Information</h2>
+<p>Because the App does not collect personal data, we do not use your personal data for any purpose. All device stats are shown only to you within the App. AdMob uses advertising data to serve ads per your consent choice.</p>
+</div>
+
+<div class="section">
+<h2>7. Data Sharing</h2>
 <p>We do not sell, rent, or share any personal data with third parties because we don't collect any. The only third-party involved is Google (AdMob) for serving ads, governed by Google's own Privacy Policy.</p>
 </div>
 
 <div class="section">
-<h2>6. Data Retention and Deletion</h2>
+<h2>8. Data Retention and Deletion</h2>
 <p>All local data remains on your device until you:</p>
 <ul>
 <li>Clear the App's data in Android Settings → Apps → HTG GameZone → Storage → Clear Data</li>
 <li>Uninstall the App</li>
 </ul>
-<p>We do not retain any copies because we do not collect data server-side.</p>
-<p>To opt out of Google AdMob data collection, go to Android Settings → Privacy → Ads → Delete advertising ID (or reset it).</p>
+<p>We do not retain any copies because we do not collect data server-side. To opt out of Google AdMob data collection, go to Android Settings → Privacy → Ads → Delete advertising ID.</p>
 </div>
 
 <div class="section">
-<h2>7. Children's Privacy</h2>
-<p>The App is not directed at children under 13. We do not knowingly collect information from children. If you believe a child has used the App, contact us — though we note again that no personal data is collected.</p>
+<h2>9. Children's Privacy</h2>
+<p>The App is not directed at children under 13. We do not knowingly collect information from children. Since no personal data is collected by us at all, there is no child data on our end. AdMob's data collection is governed by Google's policies.</p>
 </div>
 
 <div class="section">
-<h2>8. Security</h2>
-<p>Because all data stays on your device, the primary security boundary is your device itself. We recommend you:</p>
+<h2>10. Security</h2>
+<p>Because all data stays on your device, the primary security boundary is your device itself. We recommend:</p>
 <ul>
 <li>Keep your device's screen lock enabled</li>
 <li>Install OS updates regularly</li>
-<li>Only install Shizuku from its official source if you use advanced tweaks</li>
+<li>Only install Shizuku from its official source (Google Play or shizuku.rikka.app) if you use advanced features</li>
+<li>Only use .turbox modules from trusted sources (official HTG channels)</li>
 </ul>
 </div>
 
 <div class="section">
-<h2>9. Changes to This Policy</h2>
+<h2>11. Changes to This Policy</h2>
 <p>If we update this policy, we will change the "Last updated" date at the top. Significant changes will be communicated via an in-App notice or update description on Google Play.</p>
 </div>
 
 <div class="section">
-<h2>10. Your Rights</h2>
-<p>Depending on where you live, you may have rights under GDPR, CCPA, or similar laws to access, correct, delete, or restrict the use of your personal data. Because we do not collect personal data, these rights do not typically apply. If you have questions, contact us at the address below.</p>
+<h2>12. Your Rights</h2>
+<p>Depending on where you live, you may have rights under GDPR, CCPA, or similar laws. Because we do not collect personal data on our servers, most requests are not applicable. For AdMob data, contact Google directly. For any questions, contact us below.</p>
 </div>
 
 <div class="section">
-<h2>11. Contact Us</h2>
+<h2>13. Contact Us</h2>
 <p>For privacy questions or concerns:</p>
 <p><strong>Developer:</strong> Hi Tech Gamerz (Krishna Kanta Sharma)<br>
 <strong>Email:</strong> <a href="mailto:Krishnakantasharma297@gmail.com">Krishnakantasharma297@gmail.com</a><br>
-<strong>App:</strong> HTG GameZone (com.htg.gamezone)</p>
+<strong>App:</strong> HTG GameZone (com.htg.gamezone)<br>
+<strong>Response time:</strong> Within 7 working days</p>
 </div>
 
 </body>
