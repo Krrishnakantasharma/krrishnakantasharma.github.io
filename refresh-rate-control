@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refresh Rate Control — HTG Game Turbo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f0f1e;
+    color: #e8e8f0;
+    line-height: 1.7;
+    padding: 24px 16px;
+    max-width: 760px;
+    margin: 0 auto;
+}
+h1 { color: #9d7aff; font-size: 26px; margin-bottom: 8px; border-bottom: 2px solid #2a2a45; padding-bottom: 12px; }
+h2 { color: #bb9eff; font-size: 18px; margin-top: 28px; margin-bottom: 10px; }
+h3 { color: #d4c2ff; font-size: 15px; margin-top: 16px; margin-bottom: 6px; }
+p, li { color: #c8c8d8; font-size: 14px; margin-bottom: 10px; }
+ul, ol { padding-left: 22px; margin-bottom: 10px; }
+a { color: #9d7aff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.meta { color: #8888a0; font-size: 13px; margin-bottom: 20px; }
+.section { background: #1a1a2e; border-radius: 10px; padding: 18px; margin-bottom: 16px; border: 1px solid #2a2a45; }
+.highlight { background: #2a2148; border-left: 3px solid #9d7aff; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #2a1a1a; border-left: 3px solid #ff7a7a; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.success { background: #1a2a1a; border-left: 3px solid #44cc88; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.device-tag { display: inline-block; background: #2a2148; color: #9d7aff; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin: 2px; border: 1px solid #3a3160; }
+strong { color: #e8e8f0; }
+code { background: #2a2a45; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #bb9eff; font-family: monospace; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+td, th { padding: 8px 12px; border: 1px solid #2a2a45; font-size: 13px; text-align: left; }
+th { background: #2a2148; color: #bb9eff; }
+td { color: #c8c8d8; }
+</style>
+</head>
+<body>
+
+<h1>🔄 Refresh Rate Control</h1>
+<p class="meta">HTG Game Turbo · Feature Guide</p>
+
+<div class="section">
+<div class="highlight"><strong>What this does:</strong> Forces your display to run at a specific refresh rate (60Hz, 90Hz, 120Hz, etc.) by writing to Android's standard <code>peak_refresh_rate</code> and <code>min_refresh_rate</code> system settings. Setting both to the same value locks the display to that rate.</div>
+</div>
+
+<div class="section">
+<h2>How Refresh Rate Works on Android</h2>
+<p>Android controls refresh rate through two system settings:</p>
+<ul>
+<li><strong>peak_refresh_rate</strong> — the maximum rate Android will use</li>
+<li><strong>min_refresh_rate</strong> — the minimum rate Android will use</li>
+</ul>
+<p>When both are set to the same value (e.g. both 120), the display is locked to that exact rate. When they differ, Android dynamically switches between them based on what's on screen — this is "Auto" mode.</p>
+<p>HTG Game Turbo uses Shizuku to write these settings via standard ADB commands — the same way Android's own Developer Options works.</p>
+</div>
+
+<div class="section">
+<h2>Supported Refresh Rates by Device</h2>
+<p>The app automatically detects which rates your hardware actually supports by reading <code>Display.getSupportedModes()</code> from Android's display API. It only shows rates your screen can physically run — no guessing, no hardcoded lists.</p>
+
+<table>
+<tr><th>Rate</th><th>Common on</th><th>Notes</th></tr>
+<tr><td>60 Hz</td><td>All devices</td><td>Universal baseline, best battery life</td></tr>
+<tr><td>90 Hz</td><td>Mid-range phones (2020+)</td><td>Noticeably smoother, moderate battery impact</td></tr>
+<tr><td>120 Hz</td><td>Flagship phones (2020+)</td><td>Smoothest for gaming, higher battery drain</td></tr>
+<tr><td>144 Hz</td><td>Gaming phones (ASUS ROG, Redmi)</td><td>Maximum smoothness, highest battery drain</td></tr>
+<tr><td>165 Hz+</td><td>Dedicated gaming phones</td><td>Niche, very few devices</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>✅ Devices Where It Works Reliably</h2>
+
+<h3>Stock Android / Pixel</h3>
+<div class="success">Fully supported. Android reads <code>peak_refresh_rate</code> and <code>min_refresh_rate</code> directly and the display changes immediately.</div>
+
+<h3>Samsung One UI</h3>
+<div class="success">Works on most Samsung devices. One UI honors the standard Android settings keys. Both Settings app and the actual display change together.</div>
+
+<h3>OnePlus (OxygenOS)</h3>
+<div class="success">Works reliably on OxygenOS 11+. Older OxygenOS versions may require a restart for the change to take effect.</div>
+
+<h3>Nothing Phone</h3>
+<div class="success">Fully supported. Nothing OS is close to stock Android.</div>
+
+<h3>ASUS ROG / Zenfone</h3>
+<div class="success">Fully supported, including high refresh rates (144Hz+).</div>
+</div>
+
+<div class="section">
+<h2>⚠️ Xiaomi / MIUI — Important Note</h2>
+<div class="warning"><strong>The Settings app may still show the old value after you change it in HTG Game Turbo. This is normal — the display is actually running at the rate you set.</strong></div>
+
+<h3>Why this happens</h3>
+<p>MIUI maintains two separate refresh rate systems running in parallel:</p>
+<ul>
+<li><strong>Android's standard system</strong> — uses <code>peak_refresh_rate</code> and <code>min_refresh_rate</code>. HTG Game Turbo writes here. The display actually obeys this.</li>
+<li><strong>MIUI's own display settings</strong> — MIUI's Settings app reads from Xiaomi's own proprietary keys, not from Android's standard ones. When you change refresh rate through MIUI Settings, it writes to both systems. But when HTG Game Turbo writes only to Android's keys, MIUI Settings doesn't update its own display.</li>
+</ul>
+
+<h3>How to verify it actually worked</h3>
+<ol>
+<li>Set a rate in HTG Game Turbo (e.g. 120Hz)</li>
+<li>Open any third-party FPS/display meter app (e.g. AIDA64, GPU-Z, or the built-in MIUI FPS counter in Game Turbo)</li>
+<li>The actual display refresh rate shown there will confirm the rate you set</li>
+</ol>
+
+<h3>How to make MIUI Settings show the correct value too</h3>
+<ol>
+<li>Use HTG Game Turbo to set your desired rate</li>
+<li>Go to <strong>MIUI Settings → Display → Refresh Rate</strong></li>
+<li>Manually select the same rate there</li>
+<li>Both systems are now in sync</li>
+</ol>
+
+<div class="highlight">On MIUI, using HTG Game Turbo and then confirming the same rate in MIUI Settings gives you the most reliable result — both Android's system and MIUI's own layer agree on the rate.</div>
+</div>
+
+<div class="section">
+<h2>⚠️ Other OEMs With Known Quirks</h2>
+
+<h3>Realme / ColorOS (OPPO)</h3>
+<p>Generally works, but some Realme devices use their own display driver layer. If the rate doesn't stick after the screen turns off and back on, try setting it in both HTG Game Turbo AND ColorOS Settings → Display → Screen Refresh Rate.</p>
+
+<h3>Vivo / OriginOS / FuntouchOS</h3>
+<p>Mixed results. Vivo's OS sometimes overrides Android's standard keys with its own values on screen wake. The change works during an active session but may revert after the screen turns off.</p>
+
+<h3>MediaTek devices (various OEMs)</h3>
+<p>Some MediaTek display drivers don't fully expose all modes through Android's standard API. If your device has a 90Hz display but only 60Hz appears in the app, the display driver doesn't report the mode to Android — this is an OEM/driver limitation, not an app issue.</p>
+</div>
+
+<div class="section">
+<h2>Battery Impact Reference</h2>
+<table>
+<tr><th>Rate</th><th>Approx. battery impact vs 60Hz</th></tr>
+<tr><td>60 Hz</td><td>Baseline (0% extra)</td></tr>
+<tr><td>90 Hz</td><td>~5–10% more drain</td></tr>
+<tr><td>120 Hz</td><td>~10–20% more drain</td></tr>
+<tr><td>144 Hz</td><td>~20–30% more drain</td></tr>
+</table>
+<p>Impact varies significantly by device, app type, and content. Gaming at 120Hz drains more than browsing at 120Hz.</p>
+</div>
+
+<div class="section">
+<h2>Resetting to Default</h2>
+<p>Tap <strong>Auto</strong> in the Refresh Rate dialog, or use the <strong>Reset → App Settings</strong> button in Advanced Tweaks. This deletes <code>peak_refresh_rate</code> and <code>min_refresh_rate</code> from the settings database entirely, restoring Android's default adaptive behavior.</p>
+</div>
+
+<div class="section">
+<h2>Contact & Support</h2>
+<p>Having an issue not covered here? Contact us:<br>
+<strong>Email:</strong> <a href="mailto:Krishnakantasharma297@gmail.com">Krishnakantasharma297@gmail.com</a><br>
+<strong>YouTube:</strong> <a href="https://www.youtube.com/@hitechgamerzyt" target="_blank">Hi Tech Gamerz</a></p>
+</div>
+
+</body>
+</html>
