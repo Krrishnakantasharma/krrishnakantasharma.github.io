@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Mode Per App — HTG Game Turbo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f0f1e;
+    color: #e8e8f0;
+    line-height: 1.7;
+    padding: 24px 16px;
+    max-width: 760px;
+    margin: 0 auto;
+}
+h1 { color: #9d7aff; font-size: 26px; margin-bottom: 8px; border-bottom: 2px solid #2a2a45; padding-bottom: 12px; }
+h2 { color: #bb9eff; font-size: 18px; margin-top: 28px; margin-bottom: 10px; }
+h3 { color: #d4c2ff; font-size: 15px; margin-top: 16px; margin-bottom: 6px; }
+p, li { color: #c8c8d8; font-size: 14px; margin-bottom: 10px; }
+ul, ol { padding-left: 22px; margin-bottom: 10px; }
+a { color: #9d7aff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.meta { color: #8888a0; font-size: 13px; margin-bottom: 20px; }
+.section { background: #1a1a2e; border-radius: 10px; padding: 18px; margin-bottom: 16px; border: 1px solid #2a2a45; }
+.highlight { background: #2a2148; border-left: 3px solid #9d7aff; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #2a1a1a; border-left: 3px solid #ff7a7a; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.success { background: #1a2a1a; border-left: 3px solid #44cc88; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+.partial { background: #2a2a1a; border-left: 3px solid #ffaa44; padding: 10px 12px; margin: 10px 0; border-radius: 4px; font-size: 13px; }
+strong { color: #e8e8f0; }
+code { background: #2a2a45; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #bb9eff; font-family: monospace; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+td, th { padding: 8px 12px; border: 1px solid #2a2a45; font-size: 13px; text-align: left; }
+th { background: #2a2148; color: #bb9eff; }
+td { color: #c8c8d8; }
+.badge-yes { color: #44cc88; font-weight: bold; }
+.badge-no { color: #ff5252; font-weight: bold; }
+.badge-partial { color: #ffaa44; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>🏆 Game Mode Per App</h1>
+<p class="meta">HTG Game Turbo · Feature Guide</p>
+
+<div class="section">
+<div class="highlight"><strong>What this does:</strong> Uses Android's official GameManager API (introduced in Android 12) to set a specific app to "Performance" mode — telling the system to prioritise CPU and GPU resources for that app to reduce throttling and improve FPS during gaming sessions.</div>
+</div>
+
+<div class="section">
+<h2>How Android's Game Mode API Works</h2>
+<p>Android 12 introduced <strong>GameManager</strong> — a system service that lets apps and system tools declare a "game mode" for specific packages. The three modes are:</p>
+<ul>
+<li><strong>Standard</strong> — default behavior, no changes</li>
+<li><strong>Performance</strong> — system prioritises CPU/GPU for this app, may increase power consumption</li>
+<li><strong>Battery</strong> — system reduces CPU/GPU to save battery for this app</li>
+</ul>
+<p>HTG Game Turbo sets the chosen app to <strong>Performance</strong> mode using Shizuku to run the following commands:</p>
+<ul>
+<li>Android 13+: <code>cmd game set --mode performance &lt;package&gt;</code></li>
+<li>Android 12: <code>cmd game mode performance &lt;package&gt;</code></li>
+</ul>
+<p>Both commands are attempted automatically — whichever your Android version supports will be used.</p>
+
+<div class="warning"><strong>Important limitation:</strong> Game Mode only works if the app being set has declared itself as a game in its manifest, OR if the OEM has implemented the full GameManager service. Many OEMs partially implement the API — the command accepts without error but has no actual effect on performance.</div>
+</div>
+
+<div class="section">
+<h2>What "Verified" and "Not Verified" Mean in the App</h2>
+<p>When you open Game Mode Per App, the app runs a quick test — it attempts to set a system package to Performance mode and reads the result back. Based on this:</p>
+<ul>
+<li><strong>✅ Game Mode verified working</strong> — the system accepted the mode change and confirmed it. Your device's GameManager is active and responding.</li>
+<li><strong>⚠️ Game Mode API is not responding</strong> — the verification test did not get a confirmed response. This does NOT always mean it won't work — it means verification couldn't confirm it. See below for your specific device.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>Device Compatibility</h2>
+
+<table>
+<tr><th>Device / OEM</th><th>Works?</th><th>Notes</th></tr>
+<tr><td>Pixel (Android 12+)</td><td><span class="badge-yes">✅ Yes</span></td><td>Full GameManager support, verifies correctly</td></tr>
+<tr><td>Samsung One UI 4+</td><td><span class="badge-yes">✅ Yes</span></td><td>Works on most flagships, Game Launcher integrates natively</td></tr>
+<tr><td>Nothing Phone</td><td><span class="badge-yes">✅ Yes</span></td><td>Close to stock Android, full support</td></tr>
+<tr><td>ASUS ROG Phone</td><td><span class="badge-yes">✅ Yes</span></td><td>ROG has deep game mode support, works and verifies</td></tr>
+<tr><td>Xiaomi / MIUI</td><td><span class="badge-partial">⚠️ Partial</span></td><td>See MIUI section below</td></tr>
+<tr><td>OnePlus / ColorOS</td><td><span class="badge-partial">⚠️ Partial</span></td><td>See OnePlus section below</td></tr>
+<tr><td>Realme / ColorOS</td><td><span class="badge-partial">⚠️ Partial</span></td><td>Varies by model and Android version</td></tr>
+<tr><td>Vivo / OriginOS</td><td><span class="badge-no">❌ Usually No</span></td><td>Vivo uses its own game mode system, Android API not implemented</td></tr>
+<tr><td>MediaTek (generic)</td><td><span class="badge-partial">⚠️ Partial</span></td><td>Depends on OEM implementation, not the chipset itself</td></tr>
+<tr><td>Android 11 or below</td><td><span class="badge-no">❌ No</span></td><td>GameManager API requires Android 12 minimum</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>Xiaomi / MIUI — Full Details</h2>
+<div class="warning"><strong>On MIUI, Game Mode Per App usually shows "not verified" and the feature may have limited effect.</strong> Here's exactly why and what you can do.</div>
+
+<h3>Why it doesn't verify on MIUI</h3>
+<p>Xiaomi implements Android's GameManager service in MIUI, but ties it to their own <strong>Game Turbo</strong> system. The <code>cmd game</code> shell command exists but MIUI's GameManager only applies performance changes to apps that are registered in Game Turbo's internal game list. For all other apps, the command is accepted without error but has no effect.</p>
+
+<h3>How to make it work on MIUI</h3>
+<ol>
+<li>Open <strong>Game Turbo</strong> (comes pre-installed on MIUI, also called "Game Space" on some models)</li>
+<li>Tap the <strong>+</strong> button to add your game to Game Turbo's list</li>
+<li>Once the game is in Game Turbo's list, go back to HTG Game Turbo and select the same game</li>
+<li>Tap <strong>Set Performance Mode</strong></li>
+<li>MIUI's GameManager will now apply the performance setting because the app is registered as a game</li>
+</ol>
+
+<div class="highlight"><strong>Tip for MIUI users:</strong> Even without this feature, MIUI's Game Turbo already applies its own optimizations when you launch a game through it. HTG Game Turbo's Game Mode Per App adds an extra layer of performance prioritization on top of Game Turbo when both are used together.</div>
+
+<h3>MIUI versions</h3>
+<ul>
+<li><strong>MIUI 11 / Android 11</strong> — GameManager API not available (Android 12 required)</li>
+<li><strong>MIUI 13 / Android 12</strong> — GameManager present but tied to Game Turbo registration</li>
+<li><strong>MIUI 14 / Android 13-14</strong> — Same as above, Game Turbo registration required</li>
+<li><strong>HyperOS / Android 14</strong> — Similar behavior, register app in Game Space first</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>OnePlus / ColorOS — Full Details</h2>
+<div class="partial"><strong>OnePlus devices have partial support depending on the model and OS version.</strong></div>
+
+<h3>OxygenOS (OnePlus flagship, older models)</h3>
+<p>OxygenOS 12 and below uses its own HyperBoost gaming engine which is separate from Android's GameManager. The API command runs but HyperBoost takes priority.</p>
+<p><strong>To maximize effect:</strong> Enable <strong>HyperBoost</strong> in OnePlus Settings → Battery → Gaming Mode, then also apply Performance mode via HTG Game Turbo. Both systems working together gives the best result.</p>
+
+<h3>ColorOS (OnePlus mid-range, OPPO models)</h3>
+<p>ColorOS 13+ (based on Android 13) has better GameManager support. The command generally applies correctly if the app is recognized as a game by ColorOS.</p>
+<p><strong>To help ColorOS recognize your app:</strong> Open <strong>Game Assistant</strong> (swipe during a game to find it) and add your game to the Game Space list. ColorOS will then fully honor Game Mode API calls for it.</p>
+</div>
+
+<div class="section">
+<h2>App Not Registered as a Game</h2>
+<p>Even on fully-supported devices, Game Mode Per App only takes full effect for apps that declare themselves as games in their Android manifest using:</p>
+<ul>
+<li><code>&lt;category android:name="android.intent.category.GAME" /&gt;</code></li>
+<li>Or the newer <code>android:isGame="true"</code> attribute</li>
+</ul>
+<p>Many games — especially older ones, indie games, emulators, and casual games — don't include these declarations. The system accepts the Game Mode command for them but the actual CPU/GPU prioritization boost may be reduced or absent.</p>
+<p><strong>Games that definitely declare themselves (full effect expected):</strong> Most AAA mobile games like BGMI/PUBG Mobile, Call of Duty Mobile, Genshin Impact, Free Fire, Asphalt series.</p>
+<p><strong>Games that may not declare themselves (reduced or no effect):</strong> Emulators (PPSSPP, Dolphin), older games published before 2020, many indie/casual games.</p>
+</div>
+
+<div class="section">
+<h2>What to Expect When It Works</h2>
+<p>When Game Mode Performance is successfully applied, the system:</p>
+<ul>
+<li>Reduces CPU frequency scaling latency for the app — the CPU ramps up faster when the game demands more</li>
+<li>May increase sustained CPU/GPU clocks to reduce throttling during long sessions</li>
+<li>Signals to the system scheduler to give the app higher thread priority</li>
+<li>On some OEMs — disables background app killing more aggressively while the game is in foreground</li>
+</ul>
+<p>The actual FPS improvement depends heavily on whether your device was already throttling due to thermal limits. If your device runs cool, you may notice no change. If it was throttling, you may see more sustained FPS.</p>
+<div class="warning"><strong>Battery note:</strong> Performance mode tells the system to prioritise performance over power efficiency. Expect slightly faster battery drain while gaming with this active.</div>
+</div>
+
+<div class="section">
+<h2>Resetting Game Mode</h2>
+<p>To reset a game back to Standard mode, open Game Mode Per App, select the same game, and tap <strong>Reset to Standard</strong>. You can also use <strong>Reset → Module Settings</strong> or <strong>Reset → Both</strong> in the Advanced Tweaks reset button — this resets the last app you set to Performance mode back to Standard instantly.</p>
+</div>
+
+<div class="section">
+<h2>Contact & Support</h2>
+<p>Having an issue not covered here? Contact us:<br>
+<strong>Email:</strong> <a href="mailto:Krishnakantasharma297@gmail.com">Krishnakantasharma297@gmail.com</a><br>
+<strong>YouTube:</strong> <a href="https://www.youtube.com/@hitechgamerzyt" target="_blank">Hi Tech Gamerz</a></p>
+</div>
+
+</body>
+</html>
