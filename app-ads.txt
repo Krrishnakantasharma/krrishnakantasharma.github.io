@@ -1,1 +1,12 @@
-.
+#Yieldmonk_GCPP
+MANAGERDOMAIN=yieldmonk.com
+OWNERDOMAIN=krrishnakantasharma.github.io
+yieldmonk.com, 23363668381, DIRECT
+google.com, pub-9422585382673566, RESELLER, f08c47fec0942fa0
+google.com, pub-9298860897894361, DIRECT, f08c47fec0942fa0
+google.com, pub-3790066164809976, RESELLER, f08c47fec0942fa0
+google.com, pub-6716102264834969, DIRECT, f08c47fec0942fa0
+rubiconproject.com, 22884, RESELLER, 0bfd66d529a55807
+appnexus.com,16774,RESELLER,f5ab79cb980f11d1
+smaato.com, 1100054930, RESELLER, 07bcf65f187117b4
+google.com, pub-5275460454636833, DIRECT, f08c47fec0942fa0
